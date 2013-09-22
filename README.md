@@ -133,7 +133,7 @@ Helmsman.disabled_css_class = 'disabled-menu-item'
 
 ## Compatibility
 
-Helmsman is working for rails 3 & 4 and for any ruby >= 1.9.3
+Helmsman is working for rails 3 & 4 and needs ruby 2
 
 ## Contributing
 
