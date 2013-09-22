@@ -5,10 +5,10 @@ module Helmsman
     include ActionView::Helpers::UrlHelper
 
     def initialize(options = {})
-      @disabled = options.fetch(:disabled)
-      @visible  = options.fetch(:visible)
-      @current  = options.fetch(:current)
-      @i18n_key = options.fetch(:i18n_key)
+      @disabled = options.fetch(:disabled) { false }
+      @visible  = options.fetch(:visible)  { true }
+      @current  = options.fetch(:current)  { false }
+      @i18n_key = options.fetch(:i18n_key) { 'helmsman.helm.fallback' }
       @url      = options[:url]
     end
 
