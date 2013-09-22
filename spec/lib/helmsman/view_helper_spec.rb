@@ -45,7 +45,7 @@ describe Helmsman::ViewHelper do
     it 'passing disabled option disables the link' do
       result = helper.helm(:pictures, disabled: true)
       result.to_s.should_not include '<a href'
-      result.to_s.should include 'disabled-menu-item'
+      result.to_s.should include 'disabled'
     end
 
     it 'adds block results to the result' do

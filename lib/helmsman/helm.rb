@@ -31,9 +31,9 @@ module Helmsman
 
     def li_options
       if enabled?
-        { class: ('current-menu-item' if current?) }
+        { class: (Helmsman.current_css_class if current?) }
       else
-        { rel: 'tooltip', title: disabled_title, class: 'disabled-menu-item', data: { placement: 'bottom' } }
+        { rel: 'tooltip', title: disabled_title, class: Helmsman.disabled_css_class, data: { placement: 'bottom' } }
       end
     end
 

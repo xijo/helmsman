@@ -122,6 +122,15 @@ admin_sidebar_entry :pictures, disabled: true, current: false do |entry|
 end
 ```
 
+### Configuration
+
+In an initializer you can customize the css classes to use.
+
+```ruby
+Helmsman.current_css_class  = 'current-menu-item'
+Helmsman.disabled_css_class = 'disabled-menu-item'
+```
+
 ## Compatibility
 
 Helmsman is working for rails 3 & 4 and for any ruby >= 1.9.3
@@ -137,4 +146,3 @@ Helmsman is working for rails 3 & 4 and for any ruby >= 1.9.3
 ## TODO
 
 1. configure helper name
-2. configure current/disabled class
