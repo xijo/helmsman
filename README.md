@@ -1,6 +1,6 @@
 # Helmsman
 
-[![Build Status](https://secure.travis-ci.org/xijo/helmsman.png?branch=master)](https://travis-ci.org/xijo/helmsman) [![Gem Version](https://badge.fury.io/rb/helmsman.png)](http://badge.fury.io/rb/helmsman) [![Code Climate](https://codeclimate.com/repos/523f6d34c7f3a34a75017842/badges/af7056196f756e73e540/gpa.png)](https://codeclimate.com/repos/523f6d34c7f3a34a75017842/feed)
+[![Build Status](https://travis-ci.org/xijo/helmsman.png?branch=master)](https://travis-ci.org/xijo/helmsman) [![Gem Version](https://badge.fury.io/rb/helmsman.png)](http://badge.fury.io/rb/helmsman) [![Code Climate](https://codeclimate.com/repos/523f6d34c7f3a34a75017842/badges/af7056196f756e73e540/gpa.png)](https://codeclimate.com/repos/523f6d34c7f3a34a75017842/feed)
 
 ## Installation
 
