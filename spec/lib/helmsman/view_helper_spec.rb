@@ -15,65 +15,66 @@ class FakeHelper
   def action_name
     'index'
   end
+
+  def scope_key_by_partial(_)
+    'i18n_path'
+  end
 end
 
 describe Helmsman::ViewHelper do
   let(:helper) { FakeHelper.new }
 
-  before do
-    helper.stub(
-      scope_key_by_partial: 'i18npath',
-      controller_name: 'foos',
-      action_name: 'bar'
-    )
-  end
-
-  describe '#admin_sidebar_entry' do
+  describe '#helm' do
     it 'highlights per class name on a given controller name' do
-      result = helper.admin_sidebar_entry(:foos)
-      result.should include 'current-menu-item'
+      result = helper.helm(:pictures)
+      result.should be_current
     end
 
     it 'is possible to override the current state' do
-      result = helper.admin_sidebar_entry(:nooo, current: true)
-      result.should include 'current-menu-item'
+      result = helper.helm(:not_pictures, current: true)
+      result.should be_current
     end
 
     it 'highlights by action name as well' do
-      result = helper.admin_sidebar_entry(:foos, actions: :noe)
-      result.should_not include 'current-menu-item'
-      result = helper.admin_sidebar_entry(:foos, actions: :bar)
-      result.should include 'current-menu-item'
+      result = helper.helm(:pictures, actions: :show)
+      result.should_not be_current
+      result = helper.helm(:pictures, actions: :index)
+      result.should be_current
     end
 
     it 'passing disabled option disables the link' do
-      result = helper.admin_sidebar_entry(:foos, disabled: true)
-      result.should_not include '<a href'
-      result.should include 'disabled-menu-item'
+      result = helper.helm(:pictures, disabled: true)
+      result.to_s.should_not include '<a href'
+      result.to_s.should include 'disabled-menu-item'
     end
 
     it 'adds block results to the result' do
-      result = helper.admin_sidebar_entry(:foos) { |entry| 'jambalaia' }
-      result.should include 'jambalaia'
+      result = helper.helm(:pictures) { |entry| 'jambalaia' }
+      result.to_s.should include 'jambalaia'
     end
 
     it 'generates a link if it got a url' do
-      result = helper.admin_sidebar_entry(:foos, url: 'hellofoo.com')
-      result.should include '<a href="hellofoo.com">'
+      result = helper.helm(:pictures, url: 'hellofoo.com')
+      result.to_s.should include '<a href="hellofoo.com">'
     end
 
     it 'generates html_safe output' do
-      result = helper.admin_sidebar_entry(:foos)
+      result = helper.helm(:pictures)
       result.to_s.should be_html_safe
+    end
+
+    it 'setting visible to false will output nothing' do
+      result = helper.helm(:pictures, url: 'http://defiant.ncc/pictures', visible: false)
+      result.to_s.should eq ''
     end
 
     describe 'yield the entry' do
       it 'knows if its the current' do
-        helper.admin_sidebar_entry(:foo, current: true) { |e| e.should be_current }
+        helper.helm(:foo, current: true) { |e| e.should be_current }
       end
 
       it 'knows if it is disabled' do
-        helper.admin_sidebar_entry(:foo, disabled: true) do |entry|
+        helper.helm(:foo, disabled: true) do |entry|
           entry.should be_disabled
           entry.should_not be_enabled
         end

@@ -1,18 +1,27 @@
 module Helmsman
-  class Entry
+  class Helm
     attr_accessor :name, :url, :additional, :i18n_key
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::UrlHelper
 
     def initialize(options = {})
       @disabled = options.fetch(:disabled)
+      @visible  = options.fetch(:visible)
       @current  = options.fetch(:current)
       @i18n_key = options.fetch(:i18n_key)
       @url      = options[:url]
     end
 
     def to_s
-      content_tag :li, li_content, li_options
+      visible? ? content_tag(:li, li_content, li_options) : ''.html_safe
+    end
+
+    def html_safe?
+      true
+    end
+
+    def to_str
+      to_s
     end
 
     def li_content
@@ -38,6 +47,10 @@ module Helmsman
 
     def disabled?
       @disabled
+    end
+
+    def visible?
+      @visible
     end
 
     def enabled?

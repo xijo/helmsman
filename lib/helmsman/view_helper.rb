@@ -18,18 +18,19 @@ module Helmsman
       scope_key_by_partial(key)
     end
 
-    def admin_sidebar_entry(key, options = {}, &block)
+    def helm(key, options = {}, &block)
       actions     = options.fetch(:actions)     { [] }
       controllers = options.fetch(:controllers) { [key] }
       disabled    = options.fetch(:disabled)    { false }
       current     = options.fetch(:current)     { current_state_by_controller(*controllers, actions: actions) }
+      visible     = options.fetch(:visible)     { true }
       url         = options[:url]
       i18n_key    = expand_i18n_key(".#{key}")
 
-      entry = Entry.new(disabled: disabled, current: current, i18n_key: i18n_key, url: url)
+      entry = Helm.new(disabled: disabled, current: current, visible: visible, i18n_key: i18n_key, url: url)
 
       entry.additional = capture(entry, &block) if block_given?
-      entry.to_s
+      entry
     end
   end
 end
