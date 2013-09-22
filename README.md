@@ -1,6 +1,6 @@
 # Helmsman
 
-Build bootstrap
+[![Build Status](https://secure.travis-ci.org/xijo/helmsman.png?branch=master)](https://travis-ci.org/xijo/helmsman) [![Gem Version](https://badge.fury.io/rb/helmsman.png)](http://badge.fury.io/rb/helmsman)
 
 ## Installation
 
