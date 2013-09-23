@@ -42,7 +42,7 @@ module Helmsman
     end
 
     def disabled_title
-      I18n.translate("#{i18n_key}_disabled").html_safe
+      I18n.translate("#{i18n_key}_disabled_tooltip").html_safe
     end
 
     def disabled?

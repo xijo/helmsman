@@ -62,7 +62,7 @@ The first parameter will be used to lookup the translations.
 e.g. `helm :edit` called from `app/views/pictures/_menu.html.*` uses the following translations
 
 - en.pictures.menu.edit
-- en.pictures.menu.edit_disabled
+- en.pictures.menu.edit_disabled_tooltip
 
 ### Highlight current
 
