@@ -38,11 +38,11 @@ module Helmsman
     end
 
     def name
-      I18n.translate(i18n_key)
+      I18n.translate(i18n_key).html_safe
     end
 
     def disabled_title
-      I18n.translate("#{i18n_key}_disabled")
+      I18n.translate("#{i18n_key}_disabled").html_safe
     end
 
     def disabled?
