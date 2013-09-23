@@ -12,6 +12,29 @@ module Helmsman
       end
     end
 
+    # Indicates if for the given conditions the helm should be highlighted.
+    # Examples:
+    #   Given we are in pictures controller and action index
+    #   highlight_helm?(:pictures)                          # true
+    #   highlight_helm?(:foobar)                            # false
+    #   highlight_helm?(pictures: :index)                   # true
+    #   highlight_helm?(pictures: [:index, :show])          # true
+    #   highlight_helm?(pictures: [:index, :show], :foobar) # true
+    def highlight_helm?(conditions)
+      Array(conditions).any? do |condition|
+        case condition
+        when Symbol, String
+          condition.to_s == controller_name
+        when Array
+          if condition.first.to_s == controller_name
+            Array(condition.last).any? { |given| given.to_s == action_name }
+          end
+        else
+          raise TypeError, "invalid format for highlight options, expected Symbol, Array or Hash got #{conditions.class.name}"
+        end
+      end
+    end
+
     # Private part of actionpack/lib/action_view/helpers/translation_helper.rb
     # Wrapped for clarification what that does.
     def expand_i18n_key(key)
@@ -19,13 +42,13 @@ module Helmsman
     end
 
     def helm(key, options = {}, &block)
-      actions     = options.fetch(:actions)     { [] }
-      controllers = options.fetch(:controllers) { [key] }
-      disabled    = options.fetch(:disabled)    { false }
-      current     = options.fetch(:current)     { current_state_by_controller(*controllers, actions: actions) }
-      visible     = options.fetch(:visible)     { true }
-      url         = options[:url]
-      i18n_key    = expand_i18n_key(".#{key}")
+      actions        = options.fetch(:actions)     { [] }
+      highlight_opts = options.fetch(:highlight)   { key }
+      disabled       = options.fetch(:disabled)    { false }
+      current        = options.fetch(:current)     { highlight_helm?(highlight_opts) }
+      visible        = options.fetch(:visible)     { true }
+      url            = options[:url]
+      i18n_key       = expand_i18n_key(".#{key}")
 
       entry = Helm.new(disabled: disabled, current: current, visible: visible, i18n_key: i18n_key, url: url)
 

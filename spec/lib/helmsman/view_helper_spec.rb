@@ -36,9 +36,9 @@ describe Helmsman::ViewHelper do
     end
 
     it 'highlights by action name as well' do
-      result = helper.helm(:pictures, actions: :show)
+      result = helper.helm(:pictures, highlight: { pictures: :show })
       result.should_not be_current
-      result = helper.helm(:pictures, actions: :index)
+      result = helper.helm(:pictures, highlight: { pictures: :index })
       result.should be_current
     end
 
@@ -78,6 +78,33 @@ describe Helmsman::ViewHelper do
           entry.should be_disabled
           entry.should_not be_enabled
         end
+      end
+    end
+
+    describe '#highlight_helm?' do
+      it 'highlights for a given controller' do
+        helper.highlight_helm?(:pictures).should be_true
+        helper.highlight_helm?(:romulans).should be_false
+      end
+
+      it 'accepts multiple controllers as highlight options' do
+        helper.highlight_helm?([:pictures, :romulans]).should be_true
+        helper.highlight_helm?([:borg, :romulans]).should be_false
+      end
+
+      it 'takes a flat conditions hash and treats it correctly' do
+        helper.highlight_helm?(pictures: :index).should be_true
+        helper.highlight_helm?(romulans: :attack).should be_false
+      end
+
+      it 'can highlight on multiple action names' do
+        helper.highlight_helm?(pictures: [:show, :index]).should be_true
+      end
+
+      it 'raises an type error for something unknown' do
+        expect {
+          helper.highlight_helm?(3)
+        }.to raise_error(TypeError)
       end
     end
   end

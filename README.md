@@ -70,13 +70,13 @@ Helmsman will highlight the current entry by using the controller and action nam
 
 Per default the first parameter will be treated as the controller name: `helm :pictures, url: pictures_url` highlights on every controller action of the pictures_controller.
 
-You may customize the highlight options by providing a set of controller and/or action names. Here are some examples:
+You may customize the highlight options by providing a set of controller and/or action names in the `highlight` options. Here are some examples:
 
 ```ruby
-helm :bridge, controllers: :screens                           # on any screens controller action
-helm :bridge, controllers: [:screens, :sensors]               # on any screens and sensors controller action
-helm :bridge, actions: :show                                  # on bridges controller show action
-helm :bridge, controllers: :screens, actions: [:show, :index] # only on screens controller #show and #index
+helm :bridge, highlight: :screens                           # on any screens controller action
+helm :bridge, highlight: [:screens, :sensors]               # on any screens and sensors controller action
+helm :bridge, highlight: { screens: :show }                 # on bridges controller show action
+helm :bridge, highlight: :screens, sensors: [:show, :index] # only on screens controller #show and #index
 ```
 
 Anyway you are not forced to use that mechanism, you can also set `current` by hand:
