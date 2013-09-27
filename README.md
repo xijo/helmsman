@@ -73,10 +73,10 @@ Per default the first parameter will be treated as the controller name: `helm :p
 You may customize the highlight options by providing a set of controller and/or action names in the `highlight` options. Here are some examples:
 
 ```ruby
-helm :bridge, highlight: :screens                           # on any screens controller action
-helm :bridge, highlight: [:screens, :sensors]               # on any screens and sensors controller action
-helm :bridge, highlight: { screens: :show }                 # on bridges controller show action
-helm :bridge, highlight: :screens, sensors: [:show, :index] # only on screens controller #show and #index
+helm :bridge, highlight: :screens                                 # on any screens controller action
+helm :bridge, highlight: [:screens, :sensors]                     # on any screens and sensors controller action
+helm :bridge, highlight: { screens: :show }                       # on bridges controller show action
+helm :bridge, highlight: [:screens, { sensors: [:show, :index] }] # all screens controller actions and sensors controller #show and #index
 ```
 
 Anyway you are not forced to use that mechanism, you can also set `current` by hand:
