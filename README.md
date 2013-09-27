@@ -87,7 +87,7 @@ helm :bridge, current: true
 
 ### Disabling and visibility
 
-To set a helm disabled you may use the `disabled` option. It will then add a tooltip to that entry to explain why it was disabled.
+To set a helm disabled you may use the `disabled` option. It will then add a tooltip to that entry to explain why it was disabled (´.pictures_disabled_tooltip´).
 
 ```ruby
 admin_sidebar_entry :pictures, url: pictures_url, disabled: user_signed_in?
