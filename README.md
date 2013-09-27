@@ -90,13 +90,13 @@ helm :bridge, current: true
 To set a helm disabled you may use the `disabled` option. It will then add a tooltip to that entry to explain why it was disabled.
 
 ```ruby
-admin_sidebar_entry :pictures, url: pictures_url, disabled: user_signed_in?
+helm :pictures, url: pictures_url, disabled: user_signed_in?
 ```
 
 If you want it to not be visible at all set the `visible` option to false.
 
 ```ruby
-admin_sidebar_entry :pictures, url: pictures_url, visible: user_signed_in?
+helm :pictures, url: pictures_url, visible: user_signed_in?
 ```
 
 ### Additional content and nesting
@@ -114,7 +114,7 @@ You can always use the current helm during that yield, so finding out whether it
 
 
 ```ruby
-admin_sidebar_entry :pictures, disabled: true, current: false do |entry|
+helm :pictures, disabled: true, current: false do |entry|
   puts entry.enabled?   # false
   puts entry.disabled?  # true
   puts entry.visible?   # true
