@@ -63,6 +63,7 @@ e.g. `helm :edit` called from `app/views/pictures/_menu.html.*` uses the followi
 
 - en.pictures.menu.edit
 - en.pictures.menu.edit_disabled_tooltip
+- en.pictures.menu.disabled_tooltip
 
 ### Highlight current
 

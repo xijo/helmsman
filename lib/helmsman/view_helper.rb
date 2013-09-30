@@ -48,9 +48,9 @@ module Helmsman
       current        = options.fetch(:current)     { highlight_helm?(highlight_opts) }
       visible        = options.fetch(:visible)     { true }
       url            = options[:url]
-      i18n_key       = expand_i18n_key(".#{key}")
+      i18n_scope     = expand_i18n_key('.')
 
-      entry = Helm.new(disabled: disabled, current: current, visible: visible, i18n_key: i18n_key, url: url)
+      entry = Helm.new(disabled: disabled, current: current, visible: visible, i18n_key: key, i18n_scope: i18n_scope, url: url)
 
       entry.additional = capture(entry, &block) if block_given?
       entry

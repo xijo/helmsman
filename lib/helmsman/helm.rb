@@ -1,15 +1,16 @@
 module Helmsman
   class Helm
-    attr_accessor :name, :url, :additional, :i18n_key
+    attr_accessor :name, :url, :additional, :i18n_key, :i18n_scope
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::UrlHelper
 
     def initialize(options = {})
-      @disabled = options.fetch(:disabled) { false }
-      @visible  = options.fetch(:visible)  { true }
-      @current  = options.fetch(:current)  { false }
-      @i18n_key = options.fetch(:i18n_key) { 'helmsman.helm.fallback' }
-      @url      = options[:url]
+      @disabled   = options.fetch(:disabled)   { false }
+      @visible    = options.fetch(:visible)    { true }
+      @current    = options.fetch(:current)    { false }
+      @i18n_scope = options.fetch(:i18n_scope)
+      @i18n_key   = options.fetch(:i18n_key)
+      @url        = options[:url]
     end
 
     def to_s
@@ -38,11 +39,23 @@ module Helmsman
     end
 
     def name
-      I18n.translate(i18n_key).html_safe
+      I18n.translate("#{i18n_scope}#{i18n_key}").html_safe
     end
 
     def disabled_title
-      I18n.translate("#{i18n_key}_disabled_tooltip").html_safe
+      I18n.translate(disabled_tooltip_translation_key, default: default_disabled_tooltip_translation_key).html_safe
+    end
+
+    def name_translation_key
+      "#{i18n_scope}#{i18n_key}"
+    end
+
+    def disabled_tooltip_translation_key
+      "#{i18n_scope}#{i18n_key}_disabled_tooltip"
+    end
+
+    def default_disabled_tooltip_translation_key
+      "#{i18n_scope}disabled_tooltip"
     end
 
     def disabled?
