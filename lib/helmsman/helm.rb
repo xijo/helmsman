@@ -43,7 +43,10 @@ module Helmsman
     end
 
     def disabled_title
-      I18n.translate(disabled_tooltip_translation_key, default: default_disabled_tooltip_translation_key).html_safe
+      I18n.translate(
+        disabled_tooltip_translation_key,
+        default: I18n.translate(default_disabled_tooltip_translation_key)
+      ).html_safe
     end
 
     def name_translation_key
