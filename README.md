@@ -32,13 +32,13 @@ The above call will produce the following html output
 
 There are multiple ways to build the link:
 
-1. provide the url parameter. The link will then be build by using the translation and that url.
+A: Provide the url parameter. The link will then be build by using the translation and that url.
 
 ```ruby
 helm :pictures, url: 'http://randompictures.com'
 ```
 
-2. set helm values in a block.
+B: Set helm values in a block. (This works for name and url only.)
 
 ```ruby
 helm :pictures do |entry|
@@ -47,7 +47,7 @@ helm :pictures do |entry|
 end
 ```
 
-3. build everything manually
+C: Build everything manually
 
 ```ruby
 helm :pictures do |_|
