@@ -32,28 +32,28 @@ The above call will produce the following html output
 
 There are multiple ways to build the link:
 
-A: Provide the url parameter. The link will then be build by using the translation and that url.
+1. Provide the url parameter. The link will then be build by using the translation and that url.
 
-```ruby
-helm :pictures, url: 'http://randompictures.com'
-```
+  ```ruby
+  helm :pictures, url: 'http://randompictures.com'
+  ```
 
-B: Set helm values in a block. (This works for name and url only.)
+2. Set helm values in a block. (This works for name and url only.)
 
-```ruby
-helm :pictures do |entry|
-  entry.name = 'Some pictures'
-  entry.url  = 'http://randompictures.com'
-end
-```
+  ```ruby
+  helm :pictures do |entry|
+    entry.name = 'Some pictures'
+    entry.url  = 'http://randompictures.com'
+  end
+  ```
 
-C: Build everything manually
+3. Build everything manually
 
-```ruby
-helm :pictures do |_|
-  link_to 'Some pictures', 'http://randompictures.com'
-end
-```
+  ```ruby
+  helm :pictures do |_|
+    link_to 'Some pictures', 'http://randompictures.com'
+  end
+  ```
 
 ### Translation lookup
 
