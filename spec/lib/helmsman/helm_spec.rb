@@ -24,5 +24,10 @@ describe Helmsman::Helm do
     it '#default_disabled_tooltip_translation_key' do
       helm.default_disabled_tooltip_translation_key.should eq 'helmsman.disabled_tooltip'
     end
+
+    it '#name returns the setted name before the i18n fallback' do
+      helm.name = 'Foobar'
+      helm.name.should eq 'Foobar'
+    end
   end
 end

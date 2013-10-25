@@ -1,6 +1,8 @@
 module Helmsman
   class Helm
-    attr_accessor :name, :url, :additional, :i18n_key, :i18n_scope
+    attr_accessor :url, :additional, :i18n_key, :i18n_scope
+    attr_writer :name
+
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::UrlHelper
 
@@ -39,7 +41,7 @@ module Helmsman
     end
 
     def name
-      I18n.translate("#{i18n_scope}#{i18n_key}").html_safe
+      @name || I18n.translate("#{i18n_scope}#{i18n_key}").html_safe
     end
 
     def disabled_title
