@@ -107,5 +107,29 @@ describe Helmsman::ViewHelper do
         }.to raise_error(TypeError)
       end
     end
+
+    describe '#helm_i18n_scope' do
+      it 'raises an error if called without block' do
+        expect {
+          helper.helm_i18n_scope 'foobar'
+        }.to raise_error(LocalJumpError)
+      end
+
+      it 'sets and resets the helm_i18n_scope' do
+        helper.instance_variable_get(:@helm_i18n_scope).should be_nil
+        helper.helm_i18n_scope 'foobar' do
+          helper.instance_variable_get(:@helm_i18n_scope).should eq 'foobar'
+        end
+        helper.instance_variable_get(:@helm_i18n_scope).should be_nil
+      end
+
+      it 'influences #helm_expand_i18n_key' do
+        helper.helm_expand_i18n_key('picard').should eq 'i18n_path'
+
+        helper.helm_i18n_scope 'captain' do
+          helper.helm_expand_i18n_key('picard').should eq 'captain.picard'
+        end
+      end
+    end
   end
 end

@@ -35,10 +35,20 @@ module Helmsman
       end
     end
 
+    def helm_i18n_scope(scope, &block)
+      @helm_i18n_scope = scope
+      yield
+      @helm_i18n_scope = nil
+    end
+
     # Private part of actionpack/lib/action_view/helpers/translation_helper.rb
     # Wrapped for clarification what that does.
-    def expand_i18n_key(key)
-      scope_key_by_partial(key)
+    def helm_expand_i18n_key(key)
+      if @helm_i18n_scope
+        [@helm_i18n_scope, key].join('.')
+      else
+        scope_key_by_partial(key)
+      end
     end
 
     def helm(key, options = {}, &block)
@@ -48,7 +58,7 @@ module Helmsman
       current        = options.fetch(:current)     { highlight_helm?(highlight_opts) }
       visible        = options.fetch(:visible)     { true }
       url            = options[:url]
-      i18n_scope     = expand_i18n_key('.')
+      i18n_scope     = helm_expand_i18n_key('.')
 
       entry = Helm.new(disabled: disabled, current: current, visible: visible, i18n_key: key, i18n_scope: i18n_scope, url: url)
 

@@ -65,6 +65,16 @@ e.g. `helm :edit` called from `app/views/pictures/_menu.html.*` uses the followi
 - en.pictures.menu.edit_disabled_tooltip
 - en.pictures.menu.disabled_tooltip
 
+### Translation scope
+
+To wrap a group of navigation elements into the same translation namespace use the `helm_i18n_scope` method:
+
+```ruby
+helm_i18n_scope 'bridge' do
+  helm :sensors             # will use 'bridge.sensors' for translation lookup
+end
+```
+
 ### Highlight current
 
 Helmsman will highlight the current entry by using the controller and action name.
