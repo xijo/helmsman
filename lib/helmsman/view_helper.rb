@@ -45,7 +45,7 @@ module Helmsman
     # Wrapped for clarification what that does.
     def helm_expand_i18n_key(key)
       if @helm_i18n_scope
-        [@helm_i18n_scope, key].join('.')
+        [@helm_i18n_scope, key].join
       else
         scope_key_by_partial(key)
       end

@@ -127,7 +127,13 @@ describe Helmsman::ViewHelper do
         helper.helm_expand_i18n_key('picard').should eq 'i18n_path'
 
         helper.helm_i18n_scope 'captain' do
-          helper.helm_expand_i18n_key('picard').should eq 'captain.picard'
+          helper.helm_expand_i18n_key('.picard').should eq 'captain.picard'
+        end
+      end
+
+      it 'is used by #helm in the end' do
+        helper.helm_i18n_scope 'captain' do
+          helper.helm(:picard, url: 'hello-jean-luc.com').to_s.should include 'captain.picard'
         end
       end
     end
