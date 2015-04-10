@@ -64,7 +64,11 @@ describe Helmsman::ViewHelper do
     end
 
     it 'setting visible to false will output nothing' do
-      result = helper.helm(:pictures, url: 'http://defiant.ncc/pictures', visible: false)
+      result = helper.helm(
+        :pictures,
+        url:     'http://defiant.ncc/pictures',
+        visible: false
+      )
       expect(result.to_s).to eq ''
     end
 
@@ -118,22 +122,26 @@ describe Helmsman::ViewHelper do
       it 'sets and resets the helm_i18n_scope' do
         expect(helper.instance_variable_get(:@helm_i18n_scope)).to be_nil
         helper.helm_i18n_scope 'foobar' do
-          expect(helper.instance_variable_get(:@helm_i18n_scope)).to eq 'foobar'
+          scope = helper.instance_variable_get(:@helm_i18n_scope)
+          expect(scope).to eq 'foobar'
         end
-        expect(helper.instance_variable_get(:@helm_i18n_scope)).to be_nil
+        scope = helper.instance_variable_get(:@helm_i18n_scope)
+        expect(scope).to be_nil
       end
 
       it 'influences #helm_expand_i18n_key' do
         expect(helper.helm_expand_i18n_key('picard')).to eq 'i18n_path'
 
         helper.helm_i18n_scope 'captain' do
-          expect(helper.helm_expand_i18n_key('.picard')).to eq 'captain.picard'
+          key = helper.helm_expand_i18n_key('.picard')
+          expect(key).to eq 'captain.picard'
         end
       end
 
       it 'is used by #helm in the end' do
         helper.helm_i18n_scope 'captain' do
-          expect(helper.helm(:picard, url: 'hello-jean-luc.com').to_s).to include 'captain.picard'
+          helm = helper.helm(:picard, url: 'hello-jean-luc.com').to_s
+          expect(helm).to include 'captain.picard'
         end
       end
     end

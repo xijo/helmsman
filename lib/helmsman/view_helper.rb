@@ -30,7 +30,9 @@ module Helmsman
             Array(condition.last).any? { |given| given.to_s == action_name }
           end
         else
-          raise TypeError, "invalid format for highlight options, expected Symbol, Array or Hash got #{conditions.class.name}"
+          raise TypeError,
+            "invalid format for highlight options, "\
+            "expected Symbol, Array or Hash got #{conditions.class.name}"
         end
       end
     end
@@ -52,15 +54,25 @@ module Helmsman
     end
 
     def helm(key, options = {}, &block)
-      actions        = options.fetch(:actions)     { [] }
-      highlight_opts = options.fetch(:highlight)   { key }
-      disabled       = options.fetch(:disabled)    { false }
-      current        = options.fetch(:current)     { highlight_helm?(highlight_opts) }
-      visible        = options.fetch(:visible)     { true }
+      actions        = options.fetch(:actions)   { [] }
+      highlight_opts = options.fetch(:highlight) { key }
+      disabled       = options.fetch(:disabled)  { false }
+      current        = options.fetch(:current)   {
+        highlight_helm?(highlight_opts)
+      }
+      visible        = options.fetch(:visible)   { true }
       url            = options[:url]
       i18n_scope     = helm_expand_i18n_key('.')
 
-      entry = Helm.new(disabled: disabled, current: current, visible: visible, i18n_key: key, i18n_scope: i18n_scope, url: url)
+      entry = Helm.new(
+        disabled:  disabled,
+        current:    current,
+        visible:    visible,
+        i18n_key:   key,
+        i18n_scope: i18n_scope,
+        url:        url,
+        li_class:   options[:li_class]
+      )
 
       entry.additional = capture(entry, &block) if block_given?
       entry
