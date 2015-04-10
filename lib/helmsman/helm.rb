@@ -40,7 +40,7 @@ module Helmsman
         @li_class.to_s.split(/\s+/)
       end.tap do |li_class|
         yield li_class
-      end.uniq * ' '
+      end.select(&:present?).uniq.sort * ' '
     end
 
     def li_options

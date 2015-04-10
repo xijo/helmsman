@@ -61,11 +61,10 @@ describe Helmsman::Helm do
       helm = Helmsman::Helm.new(
         i18n_scope: 'helmsman.',
         i18n_key: 'key',
-        li_class: %w[bar foo]
+        li_class: %w[foo bar] << ' ' << nil
       )
       expect(helm.li_options[:class]).to respond_to :to_str
-      expect(helm.li_options[:class]).to include 'foo'
-      expect(helm.li_options[:class]).to include 'bar'
+      expect(helm.li_options[:class]).to eq 'bar foo'
     end
   end
 end
