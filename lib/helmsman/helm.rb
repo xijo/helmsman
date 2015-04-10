@@ -7,9 +7,10 @@ module Helmsman
     include ActionView::Helpers::UrlHelper
 
     def initialize(options = {})
-      @disabled   = options.fetch(:disabled)   { false }
-      @visible    = options.fetch(:visible)    { true }
-      @current    = options.fetch(:current)    { false }
+      @disabled   = options.fetch(:disabled) { false }
+      @visible    = options.fetch(:visible)  { true }
+      @current    = options.fetch(:current)  { false }
+      @li_class   = options[:li_class] || []
       @i18n_scope = options.fetch(:i18n_scope)
       @i18n_key   = options.fetch(:i18n_key)
       @url        = options[:url]
@@ -32,11 +33,36 @@ module Helmsman
       disabled? ? link : "#{link}#{additional}".html_safe
     end
 
+    def configure_li_class
+      if @li_class.respond_to?(:to_ary)
+        @li_class.to_ary
+      else
+        @li_class.to_s.split(/\s+/)
+      end.tap do |li_class|
+        yield li_class
+      end.select(&:present?).uniq.sort * ' '
+    end
+
     def li_options
       if enabled?
-        { class: (Helmsman.current_css_class if current?) }
+        li_class = configure_li_class do |li_class|
+          if current?
+            li_class << Helmsman.current_css_class
+          end
+        end
+        {
+          class: li_class
+        }
       else
-        { rel: 'tooltip', title: disabled_title, class: Helmsman.disabled_css_class, data: { placement: 'bottom' } }
+        li_class = configure_li_class do |li_class|
+          li_class << Helmsman.disabled_css_class
+        end
+        {
+          rel:   'tooltip',
+          title: disabled_title,
+          class: li_class,
+          data:  { placement: 'bottom' }
+        }
       end
     end
 
