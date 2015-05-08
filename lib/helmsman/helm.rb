@@ -1,6 +1,6 @@
 module Helmsman
   class Helm
-    attr_accessor :url, :additional, :i18n_key, :i18n_scope
+    attr_accessor :url, :additional, :i18n_key, :i18n_scope, :tooltip
     attr_writer :name
 
     include ActionView::Helpers::TagHelper
@@ -14,6 +14,7 @@ module Helmsman
       @i18n_scope = options.fetch(:i18n_scope)
       @i18n_key   = options.fetch(:i18n_key)
       @url        = options[:url]
+      @tooltip    = options.fetch(:tooltip) { '' }
     end
 
     def to_s
@@ -44,26 +45,20 @@ module Helmsman
     end
 
     def li_options
-      if enabled?
-        li_class = configure_li_class do |li_class|
-          if current?
-            li_class << Helmsman.current_css_class
-          end
-        end
-        {
-          class: li_class
-        }
-      else
-        li_class = configure_li_class do |li_class|
-          li_class << Helmsman.disabled_css_class
-        end
-        {
-          rel:   'tooltip',
-          title: disabled_title,
-          class: li_class,
-          data:  { placement: 'bottom' }
-        }
+      li_class = configure_li_class do |li_class|
+        li_class << Helmsman.current_css_class if current? and enabled?
+        li_class << Helmsman.disabled_css_class unless enabled?
       end
+      {class: li_class}.merge tooltip_options
+    end
+
+    def tooltip_options
+      return {} if enabled? and tooltip.blank?
+      {
+        title: (enabled? ? tooltip : disabled_title),
+        rel:   'tooltip',
+        data:  { placement: 'bottom' }
+      }
     end
 
     def name
