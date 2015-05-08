@@ -71,7 +71,8 @@ module Helmsman
         i18n_key:   key,
         i18n_scope: i18n_scope,
         url:        url,
-        li_class:   options[:li_class]
+        li_class:   options[:li_class],
+        tooltip:   options[:tooltip],
       )
 
       entry.additional = capture(entry, &block) if block_given?

@@ -66,5 +66,31 @@ describe Helmsman::Helm do
       expect(helm.li_options[:class]).to respond_to :to_str
       expect(helm.li_options[:class]).to eq 'bar foo'
     end
+
+    it 'contains the given tooltip' do
+      helm = Helmsman::Helm.new(
+        i18n_scope: 'helmsman.',
+        i18n_key: 'key',
+        tooltip: "Hello! I'm a tooltip"
+      )
+      expect(helm.li_options[:title]).to eq "Hello! I'm a tooltip"
+    end
+
+    it 'contains not tooltip options if tooltip is blank' do
+      helm = Helmsman::Helm.new(
+        i18n_scope: 'helmsman.',
+        i18n_key: 'key',
+        tooltip: ''
+      )
+      expect(helm.li_options).not_to have_key :title
+      expect(helm.li_options[:rel]).not_to eq 'tooltip'
+
+      helm = Helmsman::Helm.new(
+        i18n_scope: 'helmsman.',
+        i18n_key: 'key',
+      )
+      expect(helm.li_options).not_to have_key :title
+      expect(helm.li_options[:rel]).not_to eq 'tooltip'
+    end
   end
 end
