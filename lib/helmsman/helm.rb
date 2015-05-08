@@ -46,8 +46,8 @@ module Helmsman
 
     def li_options
       li_class = configure_li_class do |li_class|
-        li_class << Helmsman.current_css_class if current? and enabled?
-        li_class << Helmsman.disabled_css_class unless enabled?
+        li_class << Helmsman.current_css_class if current? && enabled?
+        li_class << Helmsman.disabled_css_class if disabled?
       end
       {class: li_class}.merge tooltip_options
     end
